@@ -3,7 +3,7 @@ function getCartItems() {
         let cartItems = [];
         snapshot.docs.forEach((doc) => {
             cartItems.push({
-                id: doc.id,
+                id: doc.id, 
                 ...doc.data()
             })
         })
@@ -12,9 +12,9 @@ function getCartItems() {
     })
 }
 
-function getTotalCost(items) {
+function getTotalCost(items){
     let totalCost = 0;
-    items.forEach((item) => {
+    items.forEach((item)=>{
         totalCost += (item.price * item.quantity);
     })
     document.querySelector(".total-cost-number").innerText = numeral(totalCost).format('$0,0.00');
@@ -33,7 +33,7 @@ function decreaseCount(itemId) {
     })
 }
 
-function increaseCount(itemId) {
+function increaseCount(itemId){
     let cartItem = db.collection("cart-items").doc(itemId);
     cartItem.get().then(function(doc) {
         if (doc.exists) {
@@ -46,7 +46,7 @@ function increaseCount(itemId) {
     })
 }
 
-function deleteItem(itemId) {
+function deleteItem(itemId){
     db.collection("cart-items").doc(itemId).delete();
 }
 
@@ -55,14 +55,14 @@ function generateCartItems(cartItems) {
     cartItems.forEach((item) => {
         itemsHTML += `
             <div class="cart-item flex items-center pb-4 border-b border-gray-100">
-                <div class="cart-item-image w-40 h-24 bg-white p-2 rounded-lg">
+                <div class="cart-item-image w-40 h-24 bg-white p-4 rounded-lg">
                     <img class="w-full h-full object-contain" src="${item.image}">
                 </div>
                 <div class="cart-item-details flex-grow">
-                    <div class="cart-item-title font-bold text-sm text-gray-800">
+                    <div class="cart-item-title font-bold text-sm text-gray-600">
                     ${item.name}
                     </div>
-                    <div class="cart-item-brand text-sm text-gray-700">
+                    <div class="cart-item-brand text-sm text-gray-400">
                     ${item.make}
                     </div>
                 </div>
@@ -95,7 +95,7 @@ function createEventListeners() {
     let deleteButtons = document.querySelectorAll(".cart-item-delete");
 
     decreaseButtons.forEach((button) => {
-        button.addEventListener("click", function() {
+        button.addEventListener("click", function(){
             decreaseCount(button.dataset.id);
         })
     })
@@ -106,12 +106,11 @@ function createEventListeners() {
         })
     })
 
-    deleteButtons.forEach((button) => {
-        button.addEventListener("click", function() {
+    deleteButtons.forEach((button)=>{
+        button.addEventListener("click", function(){
             deleteItem(button.dataset.id)
         })
     })
-
 
 }
 
